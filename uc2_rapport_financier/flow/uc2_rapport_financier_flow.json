@@ -1,0 +1,267 @@
+{
+  "$schema": "https://power-automate-tools.local/flow-editor.json#",
+  "connectionReferences": {
+    "shared_sharepointonline": {
+      "connectionName": "shared-sharepointonl-26253495-fd83-49bf-8ee6-6de1a7e44a66",
+      "connectionReferenceLogicalName": "new_sharedsharepointonline_63c17",
+      "source": "Embedded",
+      "id": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+      "displayName": "SharePoint",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1827/1.0.1827.4913/sharepointonline/icon.png",
+      "brandColor": "",
+      "tier": "Standard",
+      "apiName": "sharepointonline",
+      "isProcessSimpleApiReferenceConversionAlreadyDone": false
+    },
+    "shared_excelonlinebusiness": {
+      "connectionName": "shared-excelonlinebu-85701143-747c-4dc9-b332-9b0f5ed77e06",
+      "connectionReferenceLogicalName": "jav_sharedexcelonlinebusiness_8846a",
+      "source": "Embedded",
+      "id": "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness",
+      "displayName": "Excel Online (Business)",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1826/1.0.1826.4868/excelonlinebusiness/icon.png",
+      "brandColor": "#107C41",
+      "tier": "Standard",
+      "apiName": "excelonlinebusiness",
+      "isProcessSimpleApiReferenceConversionAlreadyDone": false
+    },
+    "shared_wordonlinebusiness": {
+      "connectionName": "shared-wordonlinebus-2517c201-93f7-4b15-814a-4cdaf6678fbf",
+      "connectionReferenceLogicalName": "jav_sharedwordonlinebusiness_f63dd",
+      "source": "Embedded",
+      "id": "/providers/Microsoft.PowerApps/apis/shared_wordonlinebusiness",
+      "displayName": "Word Online (Business)",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1828/1.0.1828.4973/wordonlinebusiness/icon.png",
+      "brandColor": "",
+      "tier": "Premium",
+      "apiName": "wordonlinebusiness",
+      "isProcessSimpleApiReferenceConversionAlreadyDone": false
+    }
+  },
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      },
+      "$authentication": {
+        "defaultValue": {},
+        "type": "SecureObject"
+      }
+    },
+    "triggers": {
+      "Quand_un_fichier_est_créé_dans_un_dossier_(déconseillé)": {
+        "recurrence": {
+          "frequency": "Minute",
+          "interval": 1
+        },
+        "evaluatedRecurrence": {
+          "frequency": "Minute",
+          "interval": 1
+        },
+        "metadata": {
+          "%252fUC1_SeaBird%252fExcel": "/UC1_SeaBird/Excel",
+          "operationMetadataId": "13236acc-388d-4f34-bbdc-c858ef07e03e"
+        },
+        "type": "OpenApiConnection",
+        "inputs": {
+          "host": {
+            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+            "connectionName": "shared_sharepointonline",
+            "operationId": "OnNewFile"
+          },
+          "parameters": {
+            "dataset": "https://javistasandbox.sharepoint.com",
+            "folderId": "%252fUC1_SeaBird%252fExcel",
+            "inferContentType": true
+          },
+          "authentication": "@parameters('$authentication')"
+        },
+        "conditions": [
+          {
+            "expression": "@endsWith(toLower(triggerOutputs()?['headers']?['x-ms-file-name']), '.xlsx')"
+          }
+        ]
+      }
+    },
+    "actions": {
+      "Exécuter_le_script_à_partir_de_la_bibliothèque_SharePoint": {
+        "runAfter": {},
+        "metadata": {
+          "01HF7FPFO3YGZHPAZPUNDITF6FPJH33IHW": "/Scripts/Bilan actif.osts",
+          "operationMetadataId": "c20f05a4-2cd3-4172-8932-a4d201ee0457"
+        },
+        "type": "OpenApiConnection",
+        "inputs": {
+          "host": {
+            "apiId": "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness",
+            "connectionName": "shared_excelonlinebusiness",
+            "operationId": "RunScriptProdV2"
+          },
+          "parameters": {
+            "source": "sites/javistasandbox.sharepoint.com,e46dfb53-06b7-41bc-8673-6f1799a4470d,c65784f2-06eb-4937-b40a-041725b59676",
+            "drive": "b!U_tt5LcGvEGGc28XmaRHDfKEV8brBjdJtAoEFyW1lnb6RqWo2NlIT6htTvSYu4Zt",
+            "file": "/Excel/@{triggerOutputs()?['headers']?['x-ms-file-name']}",
+            "scriptSource": "sites/javistasandbox.sharepoint.com,e46dfb53-06b7-41bc-8673-6f1799a4470d,c65784f2-06eb-4937-b40a-041725b59676",
+            "scriptDrive": "b!U_tt5LcGvEGGc28XmaRHDfKEV8brBjdJtAoEFyW1lnb6RqWo2NlIT6htTvSYu4Zt",
+            "scriptId": "01HF7FPFO3YGZHPAZPUNDITF6FPJH33IHW"
+          },
+          "authentication": "@parameters('$authentication')",
+          "retryPolicy": {
+            "type": "fixed",
+            "count": 3,
+            "interval": "PT30S"
+          }
+        }
+      },
+      "Données_bilan": {
+        "runAfter": {
+          "Exécuter_le_script_à_partir_de_la_bibliothèque_SharePoint": [
+            "Succeeded"
+          ]
+        },
+        "metadata": {
+          "operationMetadataId": "c86bf58e-68d4-4ae7-9f68-b72e1f9c508c"
+        },
+        "type": "Compose",
+        "inputs": "@json(outputs('Exécuter_le_script_à_partir_de_la_bibliothèque_SharePoint')?['body/result'])"
+      },
+      "Remplir_un_modèle_Microsoft_Word": {
+        "runAfter": {
+          "Données_bilan": [
+            "Succeeded"
+          ]
+        },
+        "metadata": {
+          "01HF7FPFOYGEEK6UARLNE36PPZRCJVBBZA": "/Word/Modele_Bilan_Actif.docx",
+          "operationMetadataId": "ba6359f6-4233-4276-84e5-d35c14d40757"
+        },
+        "type": "OpenApiConnection",
+        "inputs": {
+          "host": {
+            "apiId": "/providers/Microsoft.PowerApps/apis/shared_wordonlinebusiness",
+            "connectionName": "shared_wordonlinebusiness",
+            "operationId": "CreateFileItem"
+          },
+          "parameters": {
+            "source": "sites/javistasandbox.sharepoint.com,e46dfb53-06b7-41bc-8673-6f1799a4470d,c65784f2-06eb-4937-b40a-041725b59676",
+            "drive": "b!U_tt5LcGvEGGc28XmaRHDfKEV8brBjdJtAoEFyW1lnb6RqWo2NlIT6htTvSYu4Zt",
+            "file": "01HF7FPFOYGEEK6UARLNE36PPZRCJVBBZA",
+            "dynamicFileSchema/1001": "@outputs('Données_bilan')?['AnneeN']",
+            "dynamicFileSchema/1002": "@outputs('Données_bilan')?['AnneeN']",
+            "dynamicFileSchema/1003": "@outputs('Données_bilan')?['AnneeN']",
+            "dynamicFileSchema/1005": "@outputs('Données_bilan')?['AnneeN']",
+            "dynamicFileSchema/1006": "@outputs('Données_bilan')?['AnneeN1']",
+            "dynamicFileSchema/1007": "@outputs('Données_bilan')?['ActifsIncorporels_N']",
+            "dynamicFileSchema/1008": "@outputs('Données_bilan')?['ActifsIncorporels_N1']",
+            "dynamicFileSchema/1009": "@outputs('Données_bilan')?['Placements_N']",
+            "dynamicFileSchema/1010": "@outputs('Données_bilan')?['Placements_N1']",
+            "dynamicFileSchema/1011": "@outputs('Données_bilan')?['TerrainsConstructions_N']",
+            "dynamicFileSchema/1012": "@outputs('Données_bilan')?['TerrainsConstructions_N1']",
+            "dynamicFileSchema/1013": "@outputs('Données_bilan')?['PlacementsEntreprisesLiees_N']",
+            "dynamicFileSchema/1014": "@outputs('Données_bilan')?['PlacementsEntreprisesLiees_N1']",
+            "dynamicFileSchema/1015": "@outputs('Données_bilan')?['AutresPlacements_N']",
+            "dynamicFileSchema/1016": "@outputs('Données_bilan')?['AutresPlacements_N1']",
+            "dynamicFileSchema/1017": "@outputs('Données_bilan')?['CreancesEspecesDeposees_N']",
+            "dynamicFileSchema/1018": "@outputs('Données_bilan')?['CreancesEspecesDeposees_N1']",
+            "dynamicFileSchema/1019": "@outputs('Données_bilan')?['PlacementsUC_N']",
+            "dynamicFileSchema/1020": "@outputs('Données_bilan')?['PlacementsUC_N1']",
+            "dynamicFileSchema/1021": "@outputs('Données_bilan')?['PartCessionnaires_N']",
+            "dynamicFileSchema/1022": "@outputs('Données_bilan')?['PartCessionnaires_N1']",
+            "dynamicFileSchema/1023": "@outputs('Données_bilan')?['ProvCotisNonAcquisesNV_N']",
+            "dynamicFileSchema/1024": "@outputs('Données_bilan')?['ProvCotisNonAcquisesNV_N1']",
+            "dynamicFileSchema/1025": "@outputs('Données_bilan')?['ProvAssuranceVie_N']",
+            "dynamicFileSchema/1026": "@outputs('Données_bilan')?['ProvAssuranceVie_N1']",
+            "dynamicFileSchema/1027": "@outputs('Données_bilan')?['ProvPrestationsVie_N']",
+            "dynamicFileSchema/1028": "@outputs('Données_bilan')?['ProvPrestationsVie_N1']",
+            "dynamicFileSchema/1029": "@outputs('Données_bilan')?['ProvPrestationsNV_N']",
+            "dynamicFileSchema/1030": "@outputs('Données_bilan')?['ProvPrestationsNV_N1']",
+            "dynamicFileSchema/1031": "@outputs('Données_bilan')?['ProvPBVie_N']",
+            "dynamicFileSchema/1032": "@outputs('Données_bilan')?['ProvPBVie_N1']",
+            "dynamicFileSchema/1033": "@outputs('Données_bilan')?['ProvPBNV_N']",
+            "dynamicFileSchema/1034": "@outputs('Données_bilan')?['ProvPBNV_N1']",
+            "dynamicFileSchema/1035": "@outputs('Données_bilan')?['ProvEgalisationVie_N']",
+            "dynamicFileSchema/1036": "@outputs('Données_bilan')?['ProvEgalisationVie_N1']",
+            "dynamicFileSchema/1037": "@outputs('Données_bilan')?['ProvEgalisationNV_N']",
+            "dynamicFileSchema/1038": "@outputs('Données_bilan')?['ProvEgalisationNV_N1']",
+            "dynamicFileSchema/1039": "@outputs('Données_bilan')?['AutresProvTechVie_N']",
+            "dynamicFileSchema/1040": "@outputs('Données_bilan')?['AutresProvTechVie_N1']",
+            "dynamicFileSchema/1041": "@outputs('Données_bilan')?['AutresProvTechNV_N']",
+            "dynamicFileSchema/1042": "@outputs('Données_bilan')?['AutresProvTechNV_N1']",
+            "dynamicFileSchema/1043": "@outputs('Données_bilan')?['ProvTechUC_N']",
+            "dynamicFileSchema/1044": "@outputs('Données_bilan')?['ProvTechUC_N1']",
+            "dynamicFileSchema/1045": "@outputs('Données_bilan')?['PartsGarants_N']",
+            "dynamicFileSchema/1046": "@outputs('Données_bilan')?['PartsGarants_N1']",
+            "dynamicFileSchema/1047": "@outputs('Données_bilan')?['Creances_N']",
+            "dynamicFileSchema/1048": "@outputs('Données_bilan')?['Creances_N1']",
+            "dynamicFileSchema/1049": "@outputs('Données_bilan')?['CreancesOpDirectes_N']",
+            "dynamicFileSchema/1050": "@outputs('Données_bilan')?['CreancesOpDirectes_N1']",
+            "dynamicFileSchema/1051": "@outputs('Données_bilan')?['CreancesReassurance_N']",
+            "dynamicFileSchema/1052": "@outputs('Données_bilan')?['CreancesReassurance_N1']",
+            "dynamicFileSchema/1053": "@outputs('Données_bilan')?['AutresCreances_N']",
+            "dynamicFileSchema/1054": "@outputs('Données_bilan')?['AutresCreances_N1']",
+            "dynamicFileSchema/1055": "@outputs('Données_bilan')?['Personnel_N']",
+            "dynamicFileSchema/1056": "@outputs('Données_bilan')?['Personnel_N1']",
+            "dynamicFileSchema/1057": "@outputs('Données_bilan')?['EtatOrganismesSociaux_N']",
+            "dynamicFileSchema/1058": "@outputs('Données_bilan')?['EtatOrganismesSociaux_N1']",
+            "dynamicFileSchema/1059": "@outputs('Données_bilan')?['DebiteursDivers_N']",
+            "dynamicFileSchema/1060": "@outputs('Données_bilan')?['DebiteursDivers_N1']",
+            "dynamicFileSchema/1061": "@outputs('Données_bilan')?['AutresActifs_N']",
+            "dynamicFileSchema/1062": "@outputs('Données_bilan')?['AutresActifs_N1']",
+            "dynamicFileSchema/1063": "@outputs('Données_bilan')?['ActifsCorporelsExploitation_N']",
+            "dynamicFileSchema/1064": "@outputs('Données_bilan')?['ActifsCorporelsExploitation_N1']",
+            "dynamicFileSchema/1065": "@outputs('Données_bilan')?['AvoirsBanque_N']",
+            "dynamicFileSchema/1066": "@outputs('Données_bilan')?['AvoirsBanque_N1']",
+            "dynamicFileSchema/1067": "@outputs('Données_bilan')?['ComptesRegularisation_N']",
+            "dynamicFileSchema/1068": "@outputs('Données_bilan')?['ComptesRegularisation_N1']",
+            "dynamicFileSchema/1069": "@outputs('Données_bilan')?['InteretsLoyers_N']",
+            "dynamicFileSchema/1070": "@outputs('Données_bilan')?['InteretsLoyers_N1']",
+            "dynamicFileSchema/1071": "@outputs('Données_bilan')?['FraisAcquisitionVie_N']",
+            "dynamicFileSchema/1072": "@outputs('Données_bilan')?['FraisAcquisitionVie_N1']",
+            "dynamicFileSchema/1073": "@outputs('Données_bilan')?['FraisAcquisitionNV_N']",
+            "dynamicFileSchema/1074": "@outputs('Données_bilan')?['FraisAcquisitionNV_N1']",
+            "dynamicFileSchema/1075": "@outputs('Données_bilan')?['AutresComptesRegularisation_N']",
+            "dynamicFileSchema/1076": "@outputs('Données_bilan')?['AutresComptesRegularisation_N1']",
+            "dynamicFileSchema/1077": "@outputs('Données_bilan')?['DifferencesConversion_N']",
+            "dynamicFileSchema/1078": "@outputs('Données_bilan')?['DifferencesConversion_N1']",
+            "dynamicFileSchema/1079": "@outputs('Données_bilan')?['TotalActif_N']",
+            "dynamicFileSchema/1080": "@outputs('Données_bilan')?['TotalActif_N1']"
+          },
+          "authentication": "@parameters('$authentication')"
+        }
+      },
+      "Créer_un_fichier": {
+        "runAfter": {
+          "Remplir_un_modèle_Microsoft_Word": [
+            "Succeeded"
+          ]
+        },
+        "metadata": {
+          "operationMetadataId": "4dc547b6-3d13-481e-a4ce-97af599d69e8"
+        },
+        "type": "OpenApiConnection",
+        "inputs": {
+          "host": {
+            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+            "connectionName": "shared_sharepointonline",
+            "operationId": "CreateFile"
+          },
+          "parameters": {
+            "dataset": "https://javistasandbox.sharepoint.com",
+            "folderPath": "/UC1_SeaBird/Word",
+            "name": "Bilan actif @{outputs('Données_bilan')?['AnneeN']} - @{formatDateTime(utcNow(), 'yyyy-MM-dd HHmm')}.docx",
+            "body": "@body('Remplir_un_modèle_Microsoft_Word')"
+          },
+          "authentication": "@parameters('$authentication')"
+        },
+        "runtimeConfiguration": {
+          "contentTransfer": {
+            "transferMode": "Chunked"
+          }
+        }
+      }
+    }
+  }
+}
