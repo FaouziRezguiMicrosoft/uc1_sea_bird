@@ -14,20 +14,28 @@
       "isProcessSimpleApiReferenceConversionAlreadyDone": false
     },
     "shared_excelonlinebusiness": {
-      "connectionName": "<TODO_CONNEXION_EXCEL>",
+      "connectionName": "shared-excelonlinebu-85701143-747c-4dc9-b332-9b0f5ed77e06",
+      "connectionReferenceLogicalName": "jav_sharedexcelonlinebusiness_8846a",
       "source": "Embedded",
       "id": "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness",
       "displayName": "Excel Online (Business)",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1826/1.0.1826.4868/excelonlinebusiness/icon.png",
+      "brandColor": "#107C41",
       "tier": "Standard",
-      "apiName": "excelonlinebusiness"
+      "apiName": "excelonlinebusiness",
+      "isProcessSimpleApiReferenceConversionAlreadyDone": false
     },
     "shared_wordonlinebusiness": {
-      "connectionName": "<TODO_CONNEXION_WORD>",
+      "connectionName": "shared-wordonlinebus-2517c201-93f7-4b15-814a-4cdaf6678fbf",
+      "connectionReferenceLogicalName": "jav_sharedwordonlinebusiness_f63dd",
       "source": "Embedded",
       "id": "/providers/Microsoft.PowerApps/apis/shared_wordonlinebusiness",
       "displayName": "Word Online (Business)",
+      "iconUri": "https://static.powerapps.com/resource/ppcr/releases/v1.0.1828/1.0.1828.4973/wordonlinebusiness/icon.png",
+      "brandColor": "",
       "tier": "Premium",
-      "apiName": "wordonlinebusiness"
+      "apiName": "wordonlinebusiness",
+      "isProcessSimpleApiReferenceConversionAlreadyDone": false
     }
   },
   "definition": {
@@ -79,8 +87,12 @@
       }
     },
     "actions": {
-      "Exécuter_le_script_Bilan_actif": {
+      "Exécuter_le_script_à_partir_de_la_bibliothèque_SharePoint": {
         "runAfter": {},
+        "metadata": {
+          "01HF7FPFO3YGZHPAZPUNDITF6FPJH33IHW": "/Scripts/Bilan actif.osts",
+          "operationMetadataId": "c20f05a4-2cd3-4172-8932-a4d201ee0457"
+        },
         "type": "OpenApiConnection",
         "inputs": {
           "host": {
@@ -89,12 +101,12 @@
             "operationId": "RunScriptProdV2"
           },
           "parameters": {
-            "source": "<TODO_SOURCE_SITE>",
-            "drive": "<TODO_DRIVE_ID_UC1_SeaBird>",
-            "file": "@triggerOutputs()?['headers']?['x-ms-file-id']",
-            "scriptSource": "<TODO_SOURCE_SITE>",
-            "scriptDrive": "<TODO_DRIVE_ID_UC1_SeaBird>",
-            "scriptId": "<TODO_ID_BilanActif.osts>"
+            "source": "sites/javistasandbox.sharepoint.com,e46dfb53-06b7-41bc-8673-6f1799a4470d,c65784f2-06eb-4937-b40a-041725b59676",
+            "drive": "b!U_tt5LcGvEGGc28XmaRHDfKEV8brBjdJtAoEFyW1lnb6RqWo2NlIT6htTvSYu4Zt",
+            "file": "/Excel/@{triggerOutputs()?['headers']?['x-ms-file-name']}",
+            "scriptSource": "sites/javistasandbox.sharepoint.com,e46dfb53-06b7-41bc-8673-6f1799a4470d,c65784f2-06eb-4937-b40a-041725b59676",
+            "scriptDrive": "b!U_tt5LcGvEGGc28XmaRHDfKEV8brBjdJtAoEFyW1lnb6RqWo2NlIT6htTvSYu4Zt",
+            "scriptId": "01HF7FPFO3YGZHPAZPUNDITF6FPJH33IHW"
           },
           "authentication": "@parameters('$authentication')",
           "retryPolicy": {
@@ -106,18 +118,25 @@
       },
       "Données_bilan": {
         "runAfter": {
-          "Exécuter_le_script_Bilan_actif": [
+          "Exécuter_le_script_à_partir_de_la_bibliothèque_SharePoint": [
             "Succeeded"
           ]
         },
+        "metadata": {
+          "operationMetadataId": "c86bf58e-68d4-4ae7-9f68-b72e1f9c508c"
+        },
         "type": "Compose",
-        "inputs": "@json(outputs('Exécuter_le_script_Bilan_actif')?['body/result'])"
+        "inputs": "@json(outputs('Exécuter_le_script_à_partir_de_la_bibliothèque_SharePoint')?['body/result'])"
       },
-      "Remplir_le_modele_Word": {
+      "Remplir_un_modèle_Microsoft_Word": {
         "runAfter": {
           "Données_bilan": [
             "Succeeded"
           ]
+        },
+        "metadata": {
+          "01HF7FPFOYGEEK6UARLNE36PPZRCJVBBZA": "/Word/Modele_Bilan_Actif.docx",
+          "operationMetadataId": "ba6359f6-4233-4276-84e5-d35c14d40757"
         },
         "type": "OpenApiConnection",
         "inputs": {
@@ -127,9 +146,9 @@
             "operationId": "CreateFileItem"
           },
           "parameters": {
-            "source": "<TODO_SOURCE_SITE>",
-            "drive": "<TODO_DRIVE_ID_UC1_SeaBird>",
-            "file": "<TODO_ID_Modele_Bilan_Actif.docx>",
+            "source": "sites/javistasandbox.sharepoint.com,e46dfb53-06b7-41bc-8673-6f1799a4470d,c65784f2-06eb-4937-b40a-041725b59676",
+            "drive": "b!U_tt5LcGvEGGc28XmaRHDfKEV8brBjdJtAoEFyW1lnb6RqWo2NlIT6htTvSYu4Zt",
+            "file": "01HF7FPFOYGEEK6UARLNE36PPZRCJVBBZA",
             "dynamicFileSchema/1001": "@outputs('Données_bilan')?['AnneeN']",
             "dynamicFileSchema/1002": "@outputs('Données_bilan')?['AnneeN']",
             "dynamicFileSchema/1003": "@outputs('Données_bilan')?['AnneeN']",
@@ -213,11 +232,14 @@
           "authentication": "@parameters('$authentication')"
         }
       },
-      "Créer_le_fichier_Word": {
+      "Créer_un_fichier": {
         "runAfter": {
-          "Remplir_le_modele_Word": [
+          "Remplir_un_modèle_Microsoft_Word": [
             "Succeeded"
           ]
+        },
+        "metadata": {
+          "operationMetadataId": "4dc547b6-3d13-481e-a4ce-97af599d69e8"
         },
         "type": "OpenApiConnection",
         "inputs": {
@@ -230,7 +252,7 @@
             "dataset": "https://javistasandbox.sharepoint.com",
             "folderPath": "/UC1_SeaBird/Word",
             "name": "Bilan actif @{outputs('Données_bilan')?['AnneeN']} - @{formatDateTime(utcNow(), 'yyyy-MM-dd HHmm')}.docx",
-            "body": "@body('Remplir_le_modele_Word')"
+            "body": "@body('Remplir_un_modèle_Microsoft_Word')"
           },
           "authentication": "@parameters('$authentication')"
         },
