@@ -78,12 +78,7 @@
             "inferContentType": true
           },
           "authentication": "@parameters('$authentication')"
-        },
-        "conditions": [
-          {
-            "expression": "@endsWith(toLower(triggerOutputs()?['headers']?['x-ms-file-name']), '.xlsx')"
-          }
-        ]
+        }
       }
     },
     "actions": {
