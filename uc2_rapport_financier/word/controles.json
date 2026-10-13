@@ -1,0 +1,322 @@
+[
+  {
+    "id": 1001,
+    "tag": "AnneeN"
+  },
+  {
+    "id": 1002,
+    "tag": "AnneeN"
+  },
+  {
+    "id": 1003,
+    "tag": "AnneeN"
+  },
+  {
+    "id": 1004,
+    "tag": "PlusValuesLatentes"
+  },
+  {
+    "id": 1005,
+    "tag": "AnneeN"
+  },
+  {
+    "id": 1006,
+    "tag": "AnneeN1"
+  },
+  {
+    "id": 1007,
+    "tag": "ActifsIncorporels_N"
+  },
+  {
+    "id": 1008,
+    "tag": "ActifsIncorporels_N1"
+  },
+  {
+    "id": 1009,
+    "tag": "Placements_N"
+  },
+  {
+    "id": 1010,
+    "tag": "Placements_N1"
+  },
+  {
+    "id": 1011,
+    "tag": "TerrainsConstructions_N"
+  },
+  {
+    "id": 1012,
+    "tag": "TerrainsConstructions_N1"
+  },
+  {
+    "id": 1013,
+    "tag": "PlacementsEntreprisesLiees_N"
+  },
+  {
+    "id": 1014,
+    "tag": "PlacementsEntreprisesLiees_N1"
+  },
+  {
+    "id": 1015,
+    "tag": "AutresPlacements_N"
+  },
+  {
+    "id": 1016,
+    "tag": "AutresPlacements_N1"
+  },
+  {
+    "id": 1017,
+    "tag": "CreancesEspecesDeposees_N"
+  },
+  {
+    "id": 1018,
+    "tag": "CreancesEspecesDeposees_N1"
+  },
+  {
+    "id": 1019,
+    "tag": "PlacementsUC_N"
+  },
+  {
+    "id": 1020,
+    "tag": "PlacementsUC_N1"
+  },
+  {
+    "id": 1021,
+    "tag": "PartCessionnaires_N"
+  },
+  {
+    "id": 1022,
+    "tag": "PartCessionnaires_N1"
+  },
+  {
+    "id": 1023,
+    "tag": "ProvCotisNonAcquisesNV_N"
+  },
+  {
+    "id": 1024,
+    "tag": "ProvCotisNonAcquisesNV_N1"
+  },
+  {
+    "id": 1025,
+    "tag": "ProvAssuranceVie_N"
+  },
+  {
+    "id": 1026,
+    "tag": "ProvAssuranceVie_N1"
+  },
+  {
+    "id": 1027,
+    "tag": "ProvPrestationsVie_N"
+  },
+  {
+    "id": 1028,
+    "tag": "ProvPrestationsVie_N1"
+  },
+  {
+    "id": 1029,
+    "tag": "ProvPrestationsNV_N"
+  },
+  {
+    "id": 1030,
+    "tag": "ProvPrestationsNV_N1"
+  },
+  {
+    "id": 1031,
+    "tag": "ProvPBVie_N"
+  },
+  {
+    "id": 1032,
+    "tag": "ProvPBVie_N1"
+  },
+  {
+    "id": 1033,
+    "tag": "ProvPBNV_N"
+  },
+  {
+    "id": 1034,
+    "tag": "ProvPBNV_N1"
+  },
+  {
+    "id": 1035,
+    "tag": "ProvEgalisationVie_N"
+  },
+  {
+    "id": 1036,
+    "tag": "ProvEgalisationVie_N1"
+  },
+  {
+    "id": 1037,
+    "tag": "ProvEgalisationNV_N"
+  },
+  {
+    "id": 1038,
+    "tag": "ProvEgalisationNV_N1"
+  },
+  {
+    "id": 1039,
+    "tag": "AutresProvTechVie_N"
+  },
+  {
+    "id": 1040,
+    "tag": "AutresProvTechVie_N1"
+  },
+  {
+    "id": 1041,
+    "tag": "AutresProvTechNV_N"
+  },
+  {
+    "id": 1042,
+    "tag": "AutresProvTechNV_N1"
+  },
+  {
+    "id": 1043,
+    "tag": "ProvTechUC_N"
+  },
+  {
+    "id": 1044,
+    "tag": "ProvTechUC_N1"
+  },
+  {
+    "id": 1045,
+    "tag": "PartsGarants_N"
+  },
+  {
+    "id": 1046,
+    "tag": "PartsGarants_N1"
+  },
+  {
+    "id": 1047,
+    "tag": "Creances_N"
+  },
+  {
+    "id": 1048,
+    "tag": "Creances_N1"
+  },
+  {
+    "id": 1049,
+    "tag": "CreancesOpDirectes_N"
+  },
+  {
+    "id": 1050,
+    "tag": "CreancesOpDirectes_N1"
+  },
+  {
+    "id": 1051,
+    "tag": "CreancesReassurance_N"
+  },
+  {
+    "id": 1052,
+    "tag": "CreancesReassurance_N1"
+  },
+  {
+    "id": 1053,
+    "tag": "AutresCreances_N"
+  },
+  {
+    "id": 1054,
+    "tag": "AutresCreances_N1"
+  },
+  {
+    "id": 1055,
+    "tag": "Personnel_N"
+  },
+  {
+    "id": 1056,
+    "tag": "Personnel_N1"
+  },
+  {
+    "id": 1057,
+    "tag": "EtatOrganismesSociaux_N"
+  },
+  {
+    "id": 1058,
+    "tag": "EtatOrganismesSociaux_N1"
+  },
+  {
+    "id": 1059,
+    "tag": "DebiteursDivers_N"
+  },
+  {
+    "id": 1060,
+    "tag": "DebiteursDivers_N1"
+  },
+  {
+    "id": 1061,
+    "tag": "AutresActifs_N"
+  },
+  {
+    "id": 1062,
+    "tag": "AutresActifs_N1"
+  },
+  {
+    "id": 1063,
+    "tag": "ActifsCorporelsExploitation_N"
+  },
+  {
+    "id": 1064,
+    "tag": "ActifsCorporelsExploitation_N1"
+  },
+  {
+    "id": 1065,
+    "tag": "AvoirsBanque_N"
+  },
+  {
+    "id": 1066,
+    "tag": "AvoirsBanque_N1"
+  },
+  {
+    "id": 1067,
+    "tag": "ComptesRegularisation_N"
+  },
+  {
+    "id": 1068,
+    "tag": "ComptesRegularisation_N1"
+  },
+  {
+    "id": 1069,
+    "tag": "InteretsLoyers_N"
+  },
+  {
+    "id": 1070,
+    "tag": "InteretsLoyers_N1"
+  },
+  {
+    "id": 1071,
+    "tag": "FraisAcquisitionVie_N"
+  },
+  {
+    "id": 1072,
+    "tag": "FraisAcquisitionVie_N1"
+  },
+  {
+    "id": 1073,
+    "tag": "FraisAcquisitionNV_N"
+  },
+  {
+    "id": 1074,
+    "tag": "FraisAcquisitionNV_N1"
+  },
+  {
+    "id": 1075,
+    "tag": "AutresComptesRegularisation_N"
+  },
+  {
+    "id": 1076,
+    "tag": "AutresComptesRegularisation_N1"
+  },
+  {
+    "id": 1077,
+    "tag": "DifferencesConversion_N"
+  },
+  {
+    "id": 1078,
+    "tag": "DifferencesConversion_N1"
+  },
+  {
+    "id": 1079,
+    "tag": "TotalActif_N"
+  },
+  {
+    "id": 1080,
+    "tag": "TotalActif_N1"
+  }
+]
