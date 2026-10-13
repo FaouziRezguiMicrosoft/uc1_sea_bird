@@ -1,0 +1,6 @@
+# Fichiers sources SeaBird (données financières réelles) : non versionnés
+/source excel.xlsx
+/Rapports financiers pages.docx
+/SEABIRD_Javista_CR_Reunion_prerequis*.pdf
+~$*
+__pycache__/
